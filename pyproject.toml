@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "vinttem-fastapi"
+version = "0.1.0"
+description = ""
+authors = ["Matheus Lopes <mlopes.matheus@gmail.com>"]
+readme = "README.md"
+#packages = [{include = "vinttem_fastapi"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.95.1"
+uvicorn = {extras = ["standart"], version = "^0.21.1"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
