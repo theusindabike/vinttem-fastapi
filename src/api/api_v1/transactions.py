@@ -1,9 +1,9 @@
-from fastapi import FastAPI
+from fastapi import APIRouter, HTTPException
 
-app = FastAPI()
+router = APIRouter()
 
 
-@app.get("/api/v1/transactions")
+@router.get("")
 async def root():
     return {
         "results": [
@@ -41,16 +41,11 @@ async def root():
             },
             {
                 "id": "fake_id_5",
-                "user": "bianca",                                                                   
-                "value": 5.55,                                                                   
-                "category": "marketStuff",                                                          
-                "type": "even",                                                                     
-                "description": "fake description 4"
+                "user": "bianca",
+                "value": 5.55,
+                "category": "marketStuff",
+                "type": "even",
+                "description": "fake description 4",
             },
         ]
     }
-
-
-@app.post("/")
-async def post_transaction():
-    return {"message": "Hello World"}
