@@ -3,6 +3,7 @@ from typing import Optional
 from pydantic import condecimal
 from sqlmodel import Field, SQLModel
 from sqlalchemy import Column, Enum as SA_Enum
+from datetime import datetime
 
 
 class TransactionCategory(Enum):
@@ -26,3 +27,5 @@ class Transaction(SQLModel, table=True):
         sa_column=Column(SA_Enum(TransactionType), default=None, index=False)
     )
     description: str = Field(max_length=255)
+    created_at: datetime = Field(default=datetime.utcnow(), nullable=False)
+    last_edited: datetime = Field(default_factory=datetime.utcnow, nullable=False)

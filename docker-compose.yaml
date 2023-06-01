@@ -12,6 +12,8 @@ services:
       - "8000:8000"
     env_file:
       - ./.env
+    volumes:
+      - .:/api
     depends_on:
       database:
         condition: service_healthy
@@ -20,8 +22,8 @@ services:
     container_name: vinttem_db
     image: postgres:12-alpine
     restart: always
-    # volumes:
-    #   - ./local-postgres/db:/var/lib/postgresql/data
+    volumes:
+      - ./local-postgres/db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
@@ -53,8 +55,8 @@ services:
   #   depends_on:
   #     - api
 
-# volumes:
+volumes:
   # static_files:
   # media:
-  # local-postgres:
+  local-postgres:
   # proxy-dhparams:
