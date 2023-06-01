@@ -1,0 +1,19 @@
+[default]
+
+[default.security]
+# Set secret key in .secrets.toml
+# SECRET_KEY = ""
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+REFRESH_TOKEN_EXPIRE_MINUTES = 600
+
+[default.server]
+port = 666
+host = "127.0.0.1"
+log_level = "info"
+reload = false
+
+[default.db]
+uri = "postgresql://postgresuser:postgrespassword@vinttem_db:5432/dev-postgres-db"
+connect_args = {}
+echo = false
