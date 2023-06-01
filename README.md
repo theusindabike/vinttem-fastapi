@@ -1,7 +1,13 @@
 # Vinttem API
 
-### To run:
+### To run using Makefile:
 
 ```
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+make run
+```
+
+### To Setup Database Migrations:
+
+```
+docker-compose exec api alembic upgrade head
 ```
