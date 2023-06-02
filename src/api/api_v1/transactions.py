@@ -1,9 +1,28 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Request 
+from fastapi.exceptions import HTTPException
+from sqlmodel import Session, select
+
+from src.db import ActiveSession
+from src.models.transaction import Transaction, TransactionIncoming, TransactionResponse
 
 router = APIRouter()
 
 
-@router.get("")
+@router.get("/")
+async def list_transactions(*, session: Session = ActiveSession):
+    transactions = session.exec(select(Transaction)).all()
+    return transactions
+
+@router.post("/", response_model=TransactionResponse)
+async def create_transaction(*, session: Session = ActiveSession, request: Request, transaction: TransactionIncoming):
+    db_transaction = Transaction.from_orm(transaction)
+    session.add(db_transaction)
+    session.commit()
+    session.refresh(db_transaction)
+    return db_transaction
+
+
+@router.get("/mocked")
 async def root():
     return {
         "results": [

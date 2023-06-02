@@ -1,6 +1,6 @@
 from enum import Enum
 from typing import Optional
-from pydantic import condecimal
+from pydantic import BaseModel, Extra, condecimal
 from sqlmodel import Field, SQLModel
 from sqlalchemy import Column, Enum as SA_Enum
 from datetime import datetime
@@ -27,5 +27,28 @@ class Transaction(SQLModel, table=True):
         sa_column=Column(SA_Enum(TransactionType), default=None, index=False)
     )
     description: str = Field(max_length=255)
-    created_at: datetime = Field(default=datetime.utcnow(), nullable=False)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     last_edited: datetime = Field(default_factory=datetime.utcnow, nullable=False)
+
+
+class TransactionResponse(BaseModel):
+    user: str
+    value: str
+    category: TransactionCategory
+    type: TransactionType
+    description: str
+
+
+class TransactionIncoming(BaseModel):
+    user: Optional[str]
+    value: Optional[str]
+    category: Optional[TransactionCategory]
+    type: Optional[TransactionType]
+    description: Optional[str]
+
+    class Config:
+        extra = Extra.allow
+        arbitrary_types_allowed = True
+
+        # def __init__(self, *args, **kwargs):
+        # pass

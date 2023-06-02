@@ -12,6 +12,7 @@ def start_application() -> FastAPI:
 
 app = start_application()
 
+
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables(engine)
