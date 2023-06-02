@@ -31,3 +31,20 @@ def test_list_transcations(session: Session):
     data = response.json()
 
     assert response.status_code == 200
+
+
+def test_create_transcation(session: Session):
+    def get_session_override():
+        return session
+
+    app.dependency_overrides[get_session] = get_session_override
+
+    client = TestClient(app)
+
+    response = client.post("/api/v1/transactions", json={"user": "matheus", "value": 6.66, "category": 1, "type": 1, "description": "look this amazing purchase! what do you think?"})
+
+    data = response.json()
+
+    assert response.status_code == 200
+    assert data["user"] == "matheus"
+
