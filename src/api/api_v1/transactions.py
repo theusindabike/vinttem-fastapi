@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request 
+from fastapi import APIRouter, Request
 from fastapi.exceptions import HTTPException
 from sqlmodel import Session, select
 
@@ -13,13 +13,43 @@ async def list_transactions(*, session: Session = ActiveSession):
     transactions = session.exec(select(Transaction)).all()
     return transactions
 
+
 @router.post("/", response_model=TransactionResponse)
-async def create_transaction(*, session: Session = ActiveSession, request: Request, transaction: TransactionIncoming):
+async def create_transaction(
+    *,
+    session: Session = ActiveSession,
+    request: Request,
+    transaction: TransactionIncoming
+):
     db_transaction = Transaction.from_orm(transaction)
     session.add(db_transaction)
     session.commit()
     session.refresh(db_transaction)
     return db_transaction
+
+
+@router.patch(
+    "/{transaction_id}",
+    response_model=TransactionResponse,
+)
+async def update_transaction(
+    *,
+    transaction_id: int,
+    session: Session = ActiveSession,
+    request: Request,
+    patch_transaction: TransactionIncoming
+):
+    transaction = session.get(Transaction, transaction_id)
+    if not transaction:
+        raise HTTPException(status_code=404, detail="i'm sorry, nothing here")
+
+    patch_transaction_data = patch_transaction.dict(exclude_unset=True)
+    for key, value in patch_transaction_data.items():
+        setattr(transaction, key, value)
+
+    session.commit()
+    session.refresh(transaction)
+    return transaction
 
 
 @router.get("/mocked")
