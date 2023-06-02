@@ -23,7 +23,7 @@ async def create_transaction(*, session: Session = ActiveSession, request: Reque
 
 
 @router.get("/mocked")
-async def root():
+async def mockedList():
     return {
         "results": [
             {

@@ -1,12 +1,12 @@
 # Vinttem API
 
-### To run using Makefile:
+## To run using Makefile:
 
 ```
 make run
 ```
 
-### Setup Database Migrations:
+## Setup Database Migrations:
 
 To execute migrations:
 ```
@@ -24,7 +24,15 @@ To create a new migration file:
 python -m alembic revision --autogenerate -m "Some Contextual Message Overhere"
 ```
 
-### Useful commands:
+## Tests
+```
+make tests
+```
+
+## Usefull tips:
+
+Docs at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
 
 To insert a transaction:
 ```
