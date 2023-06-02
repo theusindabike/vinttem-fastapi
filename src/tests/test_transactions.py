@@ -17,14 +17,18 @@ def session_fixture():
         yield session
 
 
-def test_list_transcations(session: Session):
+@pytest.fixture(name="client")
+def client_fixture(session: Session):
     def get_session_override():
         return session
 
     app.dependency_overrides[get_session] = get_session_override
-
     client = TestClient(app)
+    yield client
+    app.dependency_overrides.clear()
 
+
+def test_list_transcations(client: TestClient):
     response = client.get("/api/v1/transactions/mocked")
 
     app.dependency_overrides.clear()
@@ -33,18 +37,19 @@ def test_list_transcations(session: Session):
     assert response.status_code == 200
 
 
-def test_create_transcation(session: Session):
-    def get_session_override():
-        return session
-
-    app.dependency_overrides[get_session] = get_session_override
-
-    client = TestClient(app)
-
-    response = client.post("/api/v1/transactions", json={"user": "matheus", "value": 6.66, "category": 1, "type": 1, "description": "look this amazing purchase! what do you think?"})
+def test_create_transcation(client: TestClient):
+    response = client.post(
+        "/api/v1/transactions",
+        json={
+            "user": "matheus",
+            "value": 6.66,
+            "category": 1,
+            "type": 1,
+            "description": "look this amazing purchase! what do you think?",
+        },
+    )
 
     data = response.json()
 
     assert response.status_code == 200
     assert data["user"] == "matheus"
-
