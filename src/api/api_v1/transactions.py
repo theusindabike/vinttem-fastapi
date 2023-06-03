@@ -16,10 +16,7 @@ async def list_transactions(*, session: Session = ActiveSession):
 
 @router.post("/", response_model=TransactionResponse)
 async def create_transaction(
-    *,
-    session: Session = ActiveSession,
-    request: Request,
-    transaction: TransactionIncoming
+    *, session: Session = ActiveSession, transaction: TransactionIncoming
 ):
     db_transaction = Transaction.from_orm(transaction)
     session.add(db_transaction)
@@ -36,7 +33,6 @@ async def update_transaction(
     *,
     transaction_id: int,
     session: Session = ActiveSession,
-    request: Request,
     patch_transaction: TransactionIncoming
 ):
     transaction = session.get(Transaction, transaction_id)
@@ -50,6 +46,19 @@ async def update_transaction(
     session.commit()
     session.refresh(transaction)
     return transaction
+
+
+@router.delete(
+    "/{transaction_id}/",
+)
+async def delete_transaction(*, session: Session = ActiveSession, transaction_id: int):
+    transaction = session.get(Transaction, transaction_id)
+    if not transaction:
+        raise HTTPException(status_code=404, detail="i'm sorry, nothing here")
+
+    session.delete(transaction)
+    session.commit()
+    return {"ok": True}
 
 
 @router.get("/mocked")

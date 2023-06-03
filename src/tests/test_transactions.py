@@ -55,17 +55,43 @@ def test_create_transcation(client: TestClient):
     assert response.status_code == 200
     assert data["user"] == "matheus"
 
+
 def test_update_transaction(session: Session, client: TestClient):
-    transaction_1 = Transaction(user="bianca", value=6.69, category=1, type=1, description="what nice transaction")
+    transaction_1 = Transaction(
+        user="bianca",
+        value=6.69,
+        category=1,
+        type=1,
+        description="what nice transaction",
+    )
 
     session.add(transaction_1)
     session.commit()
 
-    response = client.patch(f"/api/v1/transactions/{transaction_1.id}", json={"type": 2})
+    response = client.patch(
+        f"/api/v1/transactions/{transaction_1.id}", json={"type": 2}
+    )
     data = response.json()
-
 
     assert response.status_code == 200
     assert data["user"] == "bianca"
     assert data["type"] == 2
 
+
+def test_delete_transaction(session: Session, client: TestClient):
+    transaction_1 = Transaction(
+        user="bianca",
+        value=6.69,
+        category=1,
+        type=1,
+        description="what nice transaction",
+    )
+
+    session.add(transaction_1)
+    session.commit()
+
+    response = client.delete(f"/api/v1/transactions/{transaction_1.id}/")
+    data = response.json()
+
+    assert response.status_code == 200
+    assert data["ok"] == True
