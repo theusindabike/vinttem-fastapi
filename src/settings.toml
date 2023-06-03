@@ -7,7 +7,7 @@ echo = true
 [development.server]
 log_level = "debug"
 reload = true
-cors_origins = ["http://localhost:8000"]
+cors_origins = ["http://127.0.0.1:8000"]
 
 [production]
 dynaconf_merge = true
@@ -23,4 +23,4 @@ reload = false
 dynaconf_merge = true
 
 [testing.server]
-cors_origins = ["http://localhost:8000"]
+cors_origins = ["http://127.0.0.1:8000"]

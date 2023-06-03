@@ -1,9 +1,11 @@
+from datetime import datetime
 from enum import Enum
 from typing import Optional
+
 from pydantic import BaseModel, Extra, condecimal
+from sqlalchemy import Column
+from sqlalchemy import Enum as SA_Enum
 from sqlmodel import Field, SQLModel
-from sqlalchemy import Column, Enum as SA_Enum
-from datetime import datetime
 
 
 class TransactionCategory(Enum):

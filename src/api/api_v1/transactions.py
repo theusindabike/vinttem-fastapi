@@ -26,7 +26,7 @@ async def create_transaction(
 
 
 @router.patch(
-    "/{transaction_id}",
+    "/{transaction_id}/",
     response_model=TransactionResponse,
 )
 async def update_transaction(
@@ -61,7 +61,7 @@ async def delete_transaction(*, session: Session = ActiveSession, transaction_id
     return {"ok": True}
 
 
-@router.get("/mocked")
+@router.get("/mocked/")
 async def mockedList():
     return {
         "results": [

@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+
 from src.api import main_router
 from src.db import create_db_and_tables, engine
 

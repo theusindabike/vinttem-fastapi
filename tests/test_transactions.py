@@ -3,8 +3,8 @@ from fastapi.testclient import TestClient
 from sqlmodel import Session, SQLModel, create_engine
 from sqlmodel.pool import StaticPool
 
-from src.main import app
 from src.db import get_session
+from src.main import app
 from src.models.transaction import Transaction, TransactionType
 
 
@@ -30,7 +30,7 @@ def client_fixture(session: Session):
 
 
 def test_list_transcations(client: TestClient):
-    response = client.get("/api/v1/transactions/mocked")
+    response = client.get("/api/v1/transactions/mocked/")
 
     app.dependency_overrides.clear()
     data = response.json()
