@@ -21,7 +21,7 @@ make migrate
 
 To create a new migration file:
 ```
-python -m alembic revision --autogenerate -m "Some Contextual Message Overhere"
+docker-compose exec api alembic revision --autogenerate -m "Some Contextual Message Overhere"
 ```
 
 ## Tests
