@@ -2,7 +2,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Optional
 
-from pydantic import BaseModel, Extra, condecimal
+from pydantic import BaseModel, Extra, condecimal, validator
 from sqlalchemy import Column
 from sqlalchemy import Enum as SA_Enum
 from sqlmodel import Field, SQLModel
@@ -31,6 +31,12 @@ class Transaction(SQLModel, table=True):
     description: str = Field(max_length=255)
     created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     last_edited: datetime = Field(default_factory=datetime.utcnow, nullable=False)
+
+    @validator("user")
+    def must_be_bianca_or_matheus(cls, v):
+        if v not in ("matheus", "bianca"):
+            raise ValueError("must be matheus or bianca")
+        return v
 
 
 class TransactionResponse(BaseModel):

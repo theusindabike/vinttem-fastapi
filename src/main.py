@@ -1,12 +1,17 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 
-from src.api import main_router
+from src.transactions import router as transactions
 from src.db import create_db_and_tables, engine
 
 
 def start_application() -> FastAPI:
     application = FastAPI(title="Vinttem API")
-    application.include_router(main_router.router, prefix="/api")
+
+    router = APIRouter()
+    router.include_router(
+        transactions.router, tags=["transactions"], prefix="/v1/transactions"
+    )
+    application.include_router(router, prefix="/api")
 
     return application
 

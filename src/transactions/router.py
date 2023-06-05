@@ -1,9 +1,13 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter
 from fastapi.exceptions import HTTPException
 from sqlmodel import Session, select
 
 from src.db import ActiveSession
-from src.models.transaction import Transaction, TransactionIncoming, TransactionResponse
+from src.transactions.models import (
+    Transaction,
+    TransactionIncoming,
+    TransactionResponse,
+)
 
 router = APIRouter()
 

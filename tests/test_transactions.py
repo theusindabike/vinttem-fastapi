@@ -5,7 +5,7 @@ from sqlmodel.pool import StaticPool
 
 from src.db import get_session
 from src.main import app
-from src.models.transaction import Transaction, TransactionType
+from src.transactions.models import Transaction
 
 
 @pytest.fixture(name="session")
@@ -33,7 +33,6 @@ def test_list_transcations(client: TestClient):
     response = client.get("/api/v1/transactions/mocked/")
 
     app.dependency_overrides.clear()
-    data = response.json()
 
     assert response.status_code == 200
 
@@ -94,4 +93,4 @@ def test_delete_transaction(session: Session, client: TestClient):
     data = response.json()
 
     assert response.status_code == 200
-    assert data["ok"] == True
+    assert data["ok"]
