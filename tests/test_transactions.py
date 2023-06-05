@@ -5,7 +5,7 @@ from sqlmodel.pool import StaticPool
 
 from src.db import get_session
 from src.main import app
-from src.transactions.models import Transaction
+from src.transactions.models import Transaction, TransactionType, TransactionCategory
 
 
 @pytest.fixture(name="session")
@@ -43,8 +43,8 @@ def test_create_transcation(client: TestClient):
         json={
             "user": "matheus",
             "value": 6.66,
-            "category": 1,
-            "type": 1,
+            "category": TransactionCategory.recreation,
+            "type": TransactionType.proportional,
             "description": "look this amazing purchase! what do you think?",
         },
     )
@@ -59,8 +59,8 @@ def test_update_transaction(session: Session, client: TestClient):
     transaction_1 = Transaction(
         user="bianca",
         value=6.69,
-        category=1,
-        type=1,
+        category=TransactionCategory.recreation,
+        type=TransactionType.proportional,
         description="what nice transaction",
     )
 
@@ -68,13 +68,14 @@ def test_update_transaction(session: Session, client: TestClient):
     session.commit()
 
     response = client.patch(
-        f"/api/v1/transactions/{transaction_1.id}", json={"type": 2}
+        f"/api/v1/transactions/{transaction_1.id}",
+        json={"type": TransactionType.even},
     )
     data = response.json()
 
     assert response.status_code == 200
     assert data["user"] == "bianca"
-    assert data["type"] == 2
+    assert data["type"] == TransactionType.even
 
 
 def test_delete_transaction(session: Session, client: TestClient):

@@ -8,14 +8,27 @@ from sqlalchemy import Enum as SA_Enum
 from sqlmodel import Field, SQLModel
 
 
-class TransactionCategory(Enum):
-    recreation = 1
-    market_stuff = 2
+class TransactionCategory(str, Enum):
+    recreation = "recreation"
+    market_stuff = "marketStuff"
+    health = "health"
+    study = "study"
+    cloths = "cloths"
+    housing = "housing"
+    transport = "transport"
+    subscription = "subscription"
+    pets = "pets"
+    gifts = "gifts"
+    personal_care = "personalCare"
+    donations = "donations"
+    shopping = "shopping"
+    travel = "travel"
 
 
-class TransactionType(Enum):
-    proportional = 1
-    even = 2
+class TransactionType(str, Enum):
+    proportional = "proportional"
+    even = "even"
+    individual = "individual"
 
 
 class Transaction(SQLModel, table=True):
