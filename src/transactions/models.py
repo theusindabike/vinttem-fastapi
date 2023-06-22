@@ -1,4 +1,5 @@
 from datetime import datetime
+from decimal import Decimal
 from enum import Enum
 from typing import Optional
 
@@ -33,17 +34,17 @@ class TransactionType(str, Enum):
 
 class Transaction(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    user: str
-    value: condecimal(max_digits=10, decimal_places=2, ge=0) = Field(nullable=False)
-    category: TransactionCategory = Field(
+    user: Optional[str]
+    value: Optional[condecimal(max_digits=10, decimal_places=2, ge=0)] = Field()
+    category: Optional[TransactionCategory] = Field(
         sa_column=Column(SA_Enum(TransactionCategory), default=None, index=False)
     )
-    type: TransactionType = Field(
+    type: Optional[TransactionType] = Field(
         sa_column=Column(SA_Enum(TransactionType), default=None, index=False)
     )
-    description: str = Field(max_length=255)
-    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
-    last_edited: datetime = Field(default_factory=datetime.utcnow, nullable=False)
+    description: Optional[str] = Field(max_length=255)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    last_edited: datetime = Field(default_factory=datetime.utcnow)
 
     @validator("user")
     def must_be_bianca_or_matheus(cls, v):
@@ -53,11 +54,11 @@ class Transaction(SQLModel, table=True):
 
 
 class TransactionResponse(BaseModel):
-    user: str
-    value: str
-    category: TransactionCategory
-    type: TransactionType
-    description: str
+    user: Optional[str]
+    value: Optional[Decimal]
+    category: Optional[TransactionCategory]
+    type: Optional[TransactionType]
+    description: Optional[str]
 
 
 class TransactionIncoming(BaseModel):
