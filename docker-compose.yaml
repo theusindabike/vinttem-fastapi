@@ -36,27 +36,5 @@ services:
       timeout: 3s
       retries: 5
 
-  # proxy:
-  #   container_name: nginx_proxy
-  #   build:
-  #     context: ./proxy
-  #   restart: always
-  #   ports:
-  #     - 80:80
-  #     - 443:443
-  #   volumes:
-  #     - static_files:/vol/static_files/static
-  #     - media:/vol/media
-  #     - proxy-dhparams:/vol/proxy
-  #   env_file:
-  #     - ./.env.staging
-  #   environment:
-  #     - DOMAIN=${DOMAIN}
-  #   depends_on:
-  #     - api
-
 volumes:
-  # static_files:
-  # media:
   local-postgres:
-  # proxy-dhparams:

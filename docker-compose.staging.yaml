@@ -13,7 +13,7 @@ services:
     expose:
       - 8000
     env_file:
-      - ./.env.staging
+      - ./.env
     volumes:
       - .:/api
     depends_on:
@@ -49,7 +49,7 @@ services:
     volumes:
       - proxy-dhparams:/vol/proxy
     env_file:
-      - ./.env.staging
+      - ./.env
     environment:
       - DOMAIN=${DOMAIN}
     depends_on:

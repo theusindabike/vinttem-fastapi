@@ -1,5 +1,5 @@
-upstream trombeiapi {
-    server web:8000;
+upstream vinttemapi {
+    server api:8000;
 }
 
 server {
@@ -34,7 +34,7 @@ server {
     }
 
     location / {
-        proxy_pass http://trombeiapi;
+        proxy_pass http://vinttemapi;
         proxy_set_header X-Forwarded-Proto https;
         proxy_set_header X-Url-Scheme $scheme;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
