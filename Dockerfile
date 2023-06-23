@@ -14,6 +14,8 @@ WORKDIR /api
 COPY ./pyproject.toml ./poetry.lock ./
 
 RUN poetry config virtualenvs.create false \
-  && poetry install --no-interaction --no-ansi
+  && poetry install --no-interaction --no-ansi \
+  && mkdir -p /vol \
+  && chmod -R 777 /vol
 
 COPY . /api

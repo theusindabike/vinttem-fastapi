@@ -28,10 +28,10 @@ server {
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
     client_max_body_size 10M;
 
-    location /static_files/static/ {
-        #autoindex on;
-        alias /vol/static_files/static/;
-    }
+    # location /static_files/static/ {
+    #     #autoindex on;
+    #     alias /vol/static_files/static/;
+    # }
 
     location / {
         proxy_pass http://vinttemapi;
