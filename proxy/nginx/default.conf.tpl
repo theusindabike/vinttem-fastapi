@@ -17,8 +17,8 @@ server {
         root /vol/www/;
     }
 
-    location /static_files/static/ {
-        alias /vol/static_files/static/;
-    }
+    # location /static_files/static/ {
+    #     alias /vol/static_files/static/;
+    # }
 
 }
