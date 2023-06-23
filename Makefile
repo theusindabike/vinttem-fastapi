@@ -5,7 +5,7 @@ run_staging:
 	docker compose -f docker-compose.staging.yaml down --volumes && docker compose -f docker-compose.staging.yaml up --build
 
 run_aws:
-	docker compose -f docker-compose.aws.yaml down && docker compose -f docker-compose.aws.yaml up --build
+	docker-compose -f docker-compose.aws.yaml down && docker-compose -f docker-compose.aws.yaml up --build
 
 migrate:
 	docker compose exec api alembic upgrade head
